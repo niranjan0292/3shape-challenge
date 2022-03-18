@@ -6,8 +6,8 @@ Purpose:
 The script performs a prerequesite check before making an API call to the GitHub. The REST API calls to GitHub is classified either as 'search' or 'core'(any request that does not access search)and applies appropriate limits.
 
 Inputs:
-'--pat', '-p'
-    - Mandatory
+'pat'
+    - Mandatory(positional parameter)
     - The personal access token for which the limts are to be retrieved
 '--url', '-u'
     - Optional
@@ -39,8 +39,7 @@ possiblities = [
     'https://'+api_host+search_endpoint
 ]
 
-
-def main(url, pat):
+def main(pat,url):
 
     if not pat.startswith('ghp_'):
         raise ValueError('PAT is not valid')
@@ -84,14 +83,12 @@ def main(url, pat):
     elif pc >= 10:
         print(
             'The limit is at or greater that 10 percent({0}%). We are good to go!'.format(pc))
-        sys.exit
+        sys.exit(0)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        '--pat', '-p', help="The Personal Access Token(PAT) the limits are to be checked", type=str)
-    parser.add_argument(
-        '--url', '-u', help="The endpoint to which the limits are to be verfied. Can look like on of: search or /search/issues or api.github.com/search/issues", type=str, default="/user")
+    parser.add_argument('pat', help="The Personal Access Token(PAT) the limits are to be checked", type= str)
+    parser.add_argument('--url', '-u', help="The endpoint to which the limits are to be verfied. Can look like: 'search' or '/search/issues' or 'api.github.com/search/issues'", type= str, default="/user")
     args = parser.parse_args()
     main(args.pat, args.url)
