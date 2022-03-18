@@ -82,13 +82,13 @@ def main(pat,url):
         sys.exit(1)
     elif pc >= 10:
         print(
-            'The limit is at or greater that 10 percent({0}%). We are good to go!'.format(pc))
+            'The limit is at or greater that 10 percent({}%). We are good to go!'.format(pc))
         sys.exit(0)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('pat', help="The Personal Access Token(PAT) the limits are to be checked", type= str)
-    parser.add_argument('--url', '-u', help="The endpoint to which the limits are to be verfied. Can look like: 'search' or '/search/issues' or 'api.github.com/search/issues'", type= str, default="/user")
+    parser.add_argument('--url', '-u', help="The endpoint to which the limits are to be verfied. Can look like one of: {}".format(possiblities), type= str, default="/user")
     args = parser.parse_args()
     main(args.pat, args.url)
